@@ -150,7 +150,7 @@ namespace Bleatingsheep.Osu.ApiV2.Utils
                 try
                 {
                     var response = Http.PostAsync(url, content).Result;
-                    response.EnsureSuccessStatusCode();
+                    //response.EnsureSuccessStatusCode();
                     return response;
                 }
                 catch (Exception)
