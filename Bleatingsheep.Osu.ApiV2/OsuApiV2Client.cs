@@ -19,8 +19,11 @@ namespace Bleatingsheep.Osu.ApiV2
 
         public async Task<UserV2> GetUserAsync(int osuId, Mode mode) => await GetAsync<UserV2>(UserUrl(osuId, mode));
 
-        public async Task<Beatmapsets[]> SearchBeatMapAsync(BeatmapsetsSearchOptions options) =>
-            await GetAsync<Beatmapsets[]>(BeatmapsetsUrl(options));
+        public async Task<Beatmapsets[]> SearchBeatMapAsync(string keyword) =>
+            await GetAsync<Beatmapsets[]>(BeatmapsetsUrl(keyword, null));
+        public async Task<Beatmapsets[]> SearchBeatMapAsync(string keyword, BeatmapsetsSearchOptions options) =>
+            await GetAsync<Beatmapsets[]>(BeatmapsetsUrl(keyword, options));
+
 
         #region private members
 
@@ -40,10 +43,10 @@ namespace Bleatingsheep.Osu.ApiV2
             return result;
         }
 
-        private static string BeatmapsetsUrl(BeatmapsetsSearchOptions options)
+        private static string BeatmapsetsUrl(string keyword, BeatmapsetsSearchOptions options)
         {
-            var paramDic = new Dictionary<string, string>();
-            AddParams(options, paramDic);
+            var paramDic = new Dictionary<string, string> { { "q", keyword } };
+            if (options != null) AddParams(options, paramDic);
 
             string paramStr = paramDic.ToUrlParamString();
             const string setsUrl = BaseUrl + "beatmapsets/search";
