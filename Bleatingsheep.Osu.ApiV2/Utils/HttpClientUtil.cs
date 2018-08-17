@@ -170,18 +170,6 @@ namespace Bleatingsheep.Osu.ApiV2.Utils
             return true; // always accept
         }
 
-        private static string ToUrlParamString(this IDictionary<string, string> args)
-        {
-            if (args == null || args.Count <= 1)
-                return "";
-            StringBuilder sb = new StringBuilder("?");
-            foreach (var item in args)
-                sb.Append(item.Key + "=" + item.Value + "&");
-            sb.Remove(sb.Length - 1, 1);
-
-            return sb.ToString();
-        }
-
         private static string GetContentType(this HttpContentType type)
         {
             switch (type)
